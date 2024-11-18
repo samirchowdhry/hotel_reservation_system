@@ -11,8 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
-
 public class WelcomeController {
 
     @Autowired
@@ -28,12 +26,12 @@ public class WelcomeController {
 
         try {
 
-            UsernamePasswordAuthenticationToken us =  new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
+            UsernamePasswordAuthenticationToken us =  new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword());
 
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+                    new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
             );
-            return  new ResponseEntity<>(new JSONObject().put("token",  "Bearer " +jwtUtil.generateToken(authRequest.getUsername())).toString(), HttpStatus.OK);
+            return  new ResponseEntity<>(new JSONObject().put("token",  "Bearer " +jwtUtil.generateToken(authRequest.getEmail())).toString(), HttpStatus.OK);
 
         } catch (Exception ex) {
             System.out.println(ex);
